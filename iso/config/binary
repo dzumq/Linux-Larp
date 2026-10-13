@@ -50,7 +50,7 @@ LB_ZSYNC="false"
 LB_BUILD_WITH_CHROOT="true"
 
 # Set debian-installer
-LB_DEBIAN_INSTALLER="none"
+LB_DEBIAN_INSTALLER="live"
 
 # Set debian-installer suite
 LB_DEBIAN_INSTALLER_DISTRIBUTION="trixie"
@@ -62,7 +62,7 @@ LB_DEBIAN_INSTALLER_PRESEEDFILE=""
 LB_DEBIAN_INSTALLER_GUI="true"
 
 # Set hdd label
-LB_HDD_LABEL="DEBIAN_LIVE"
+LB_HDD_LABEL="LINUX_LARP"
 
 # Set hdd filesystem size
 LB_HDD_SIZE="auto"
@@ -71,16 +71,16 @@ LB_HDD_SIZE="auto"
 LB_HDD_PARTITION_START=""
 
 # Set iso author
-LB_ISO_APPLICATION="Debian Live"
+LB_ISO_APPLICATION="Linux Larp Live"
 
 # Set iso preparer
 LB_ISO_PREPARER="live-build @LB_VERSION@; https://salsa.debian.org/live-team/live-build"
 
 # Set iso publisher
-LB_ISO_PUBLISHER="Debian Live project; https://wiki.debian.org/DebianLive; debian-live@lists.debian.org"
+LB_ISO_PUBLISHER="Linux LARP Team"
 
 # Set iso volume (max 32 chars)
-LB_ISO_VOLUME="Debian trixie @ISOVOLUME_TS@"
+LB_ISO_VOLUME="Linux Larp 1.0 amd64"
 
 # Set jffs2 eraseblock size
 LB_JFFS2_ERASEBLOCK=""

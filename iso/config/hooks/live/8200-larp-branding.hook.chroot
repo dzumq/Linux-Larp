@@ -1,0 +1,103 @@
+#!/bin/sh
+set -e
+
+BRANDING_DIR="/etc/calamares/branding/debian"
+LOGO_SRC="/usr/share/linux-larp/logo.png"
+
+if [ -d "$BRANDING_DIR" ] && [ -f "$LOGO_SRC" ]; then
+    cp "$LOGO_SRC" "$BRANDING_DIR/linux-larp-logo.png"
+    cp "$LOGO_SRC" "$BRANDING_DIR/debian-logo.png"
+    cp "$LOGO_SRC" "$BRANDING_DIR/welcome.png"
+    cp "$LOGO_SRC" "$BRANDING_DIR/slide1.png"
+
+    cat > "$BRANDING_DIR/branding.desc" <<'EOF'
+---
+componentName:   debian
+welcomeStyleCalamares: true
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 800px,580px
+windowPlacement: center
+
+strings:
+    productName:         Linux Larp
+    shortProductName:    Larp
+    version:             1.0
+    shortVersion:        1.0
+    versionedName:       Linux Larp 1.0
+    shortVersionedName:  Larp 1.0
+    bootloaderEntryName: Linux Larp
+    productUrl:          https://github.com/dzumq/Linux-Larp
+    supportUrl:          https://github.com/dzumq/Linux-Larp
+    knownIssuesUrl:      https://github.com/dzumq/Linux-Larp
+    releaseNotesUrl:     https://github.com/dzumq/Linux-Larp
+    donateUrl:           https://github.com/dzumq/Linux-Larp
+
+sidebar: widget
+navigation: widget
+
+images:
+    productLogo:         "linux-larp-logo.png"
+    productIcon:         "linux-larp-logo.png"
+    productWelcome:      "welcome.png"
+
+slideshow:               "show.qml"
+
+style:
+   SidebarBackground:    "#000000"
+   SidebarText:          "#00ff66"
+   SidebarTextCurrent:   "#ffffff"
+   SidebarBackgroundCurrent: "#001a0a"
+
+slideshowAPI: 2
+EOF
+
+    cat > "$BRANDING_DIR/show.qml" <<'EOF'
+import QtQuick 2.0;
+import calamares.slideshow 1.0;
+
+Presentation
+{
+    id: presentation
+
+    Timer {
+        interval: 20000
+        repeat: true
+        onTriggered: presentation.goToNextSlide()
+    }
+
+    Slide {
+        Image {
+            id: background1
+            source: "slide1.png"
+            width: 467; height: 280
+            fillMode: Image.PreserveAspectFit
+            anchors.centerIn: parent
+        }
+        Text {
+            anchors.horizontalCenter: background1.horizontalCenter
+            anchors.top: background1.bottom
+            text: qsTr("Welcome to Linux Larp 1.0.<br/>"+
+                  "The rest of the installation is automated and should complete in a few minutes.")
+            wrapMode: Text.WordWrap
+            width: 600
+            horizontalAlignment: Text.Center
+        }
+    }
+
+}
+EOF
+fi
+
+DESKTOP_FILE="/usr/share/applications/calamares-install-debian.desktop"
+if [ -f "$DESKTOP_FILE" ]; then
+    sed -i 's|^Name=.*|Name=Install Linux Larp|' "$DESKTOP_FILE"
+    sed -i 's|^Comment=.*|Comment=Installer for Linux Larp Live|' "$DESKTOP_FILE"
+    sed -i 's|^Keywords=.*|Keywords=calamares;system;install;linux-larp;larp;installer|' "$DESKTOP_FILE"
+fi
+
+if [ -f "$LOGO_SRC" ] && [ -d /usr/share/pixmaps ]; then
+    cp "$LOGO_SRC" /usr/share/pixmaps/install-debian.png || true
+fi
+
+echo "P: $(basename $0) LARP branding applied"

@@ -4,7 +4,7 @@ lb config noauto \
   --distribution trixie \
   --architectures amd64 \
   --binary-images iso-hybrid \
-  --debian-installer none \
+  --debian-installer live \
   --archive-areas "main non-free-firmware" \
   --bootappend-live "boot=live components hostname=larp username=linux user-fullname='Linux LARP User'" \
   "${@}"
